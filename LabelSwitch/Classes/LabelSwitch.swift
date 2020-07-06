@@ -75,7 +75,7 @@ private class LabelSwitchPart {
     }()
     private lazy var thumbImageView: UIImageView = {
         let view = UIImageView()
-        view.contentMode = .scaleAspectFill
+        view.contentMode = .scaleToFill
         return view
     }()
     
