@@ -293,7 +293,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-LabelSwitch_Example/Pods-LabelSwitch_Example-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-LabelSwitch_Example/Pods-LabelSwitch_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/LabelSwitch/LabelSwitch.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -302,7 +302,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LabelSwitch_Example/Pods-LabelSwitch_Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LabelSwitch_Example/Pods-LabelSwitch_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		84109630AFDD33DF4BB96720 /* [CP] Check Pods Manifest.lock */ = {

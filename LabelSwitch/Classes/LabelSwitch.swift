@@ -61,6 +61,8 @@ private class LabelSwitchPart {
 }
 
 @IBDesignable public class LabelSwitch: UIView {
+    public var originalImage:UIImage?
+    public var selectedImage:UIImage?
     
     private lazy var circleView: UIView = {
         let view = UIView()
@@ -69,6 +71,11 @@ private class LabelSwitchPart {
         view.layer.shadowOffset = CGSize(width: 0, height: 2)
         view.layer.shadowOpacity = 0.5
         addSubview(view)
+        return view
+    }()
+    private lazy var thumbImageView: UIImageView = {
+        let view = UIImageView()
+        view.contentMode = .scaleAspectFit
         return view
     }()
     
@@ -156,7 +163,7 @@ private class LabelSwitchPart {
     public var isEnable: Bool = true
     
     override public convenience init(frame: CGRect) {
-        self.init(center: .zero, leftConfig: .defaultLeft, rightConfig: .defaultRight)
+        self.init(center: .zero, leftConfig: .defaultLeft, rightConfig: .defaultRight,leftImage:nil,rightImage:nil)
     }
     
     public init(center: CGPoint,
@@ -164,8 +171,11 @@ private class LabelSwitchPart {
            rightConfig: LabelSwitchConfig,
          circlePadding: CGFloat = 1,
            minimumSize: CGSize = .zero,
-          defaultState: LabelSwitchState = .L) {
-        
+           defaultState: LabelSwitchState = .L,leftImage:UIImage?,rightImage:UIImage?) {
+        self.originalImage = leftImage
+        self.selectedImage = rightImage
+        stateL.Image = originalImage
+        stateR.Image = selectedImage
         self.circlePadding = circlePadding
         self.minimumSize = minimumSize
         self.curState = defaultState
@@ -178,6 +188,7 @@ private class LabelSwitchPart {
     }
     
     private func updateUI() {
+        self.thumbImageView.isHidden = (originalImage == nil)
         calculateSize()
         switch curState {
         case .L: updateUIState(stateL)
@@ -187,6 +198,7 @@ private class LabelSwitchPart {
     
     /// Calculate the bounds of the switch accourding to the label's text and font size
     private func calculateSize () {
+        circleView.addSubview(thumbImageView)
         let circleMinimumSize = minimumSize.height - 2 * circlePadding
         let circleSize = max(circleMinimumSize, max(switchConfigL.font.pointSize, switchConfigR.font.pointSize) * 2)
         edge = circleSize * 0.2
@@ -198,15 +210,31 @@ private class LabelSwitchPart {
     /// Calculate the left frame and right frame for the circle
     private func setupCircle() {
         let diameter = bounds.height - 2 * circlePadding
+        let tumbImageDiamter = diameter
         circleView.layer.cornerRadius = diameter / 2
         circleView.layer.shadowRadius = bounds.height * 0.05
+        thumbImageView.layer.cornerRadius = tumbImageDiamter / 2
         let circleSize = CGSize(width: diameter, height: diameter)
+        let thumbImageSize = CGSize(width: tumbImageDiamter, height: tumbImageDiamter)
         
         stateL.circleFrame = CGRect(origin: CGPoint(x: circlePadding, y: circlePadding),
                                       size: circleSize)
         
         stateR.circleFrame = CGRect(origin: CGPoint(x: bounds.width - diameter - circlePadding, y: circlePadding),
                                       size: circleSize)
+        stateL.thumbImageFrame = CGRect(origin: CGPoint(x: circlePadding, y: circlePadding),
+                                      size: thumbImageSize)
+
+        stateR.thumbImageFrame = CGRect(origin: CGPoint(x: bounds.width - tumbImageDiamter - circlePadding, y: circlePadding),
+                                      size: thumbImageSize)
+        self.thumbImageView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            self.thumbImageView.topAnchor.constraint(equalTo: self.circleView.topAnchor, constant: 2),
+            self.thumbImageView.leadingAnchor.constraint(equalTo: self.circleView.leadingAnchor, constant: 2),
+            self.thumbImageView.trailingAnchor.constraint(equalTo: self.circleView.trailingAnchor, constant: -2),
+            self.thumbImageView.bottomAnchor.constraint(equalTo: self.circleView.bottomAnchor, constant: -2)
+         ])
         /// Add the touch event to the circle view
         circleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(switchTapped(sender:))))
     }
@@ -251,6 +279,8 @@ private class LabelSwitchPart {
         leftPart.setState(state.leftPartState)
         rightPart.setState(state.rightPartState)
         circleView.frame  = state.circleFrame
+        thumbImageView.frame = state.thumbImageFrame
+        thumbImageView.image = state.Image
         backgroundColor = state.backgroundColor
     }
     

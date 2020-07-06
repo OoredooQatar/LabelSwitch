@@ -14,6 +14,8 @@ struct LabelSwitchPartState {
 struct LabelSwitchUIState {
     var backgroundColor: UIColor = .clear
     var circleFrame: CGRect = .zero
+    var thumbImageFrame:CGRect = .zero
+    var Image:UIImage?
     var leftPartState  = LabelSwitchPartState()
     var rightPartState = LabelSwitchPartState()
 }

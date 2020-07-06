@@ -34,7 +34,8 @@ class ViewController: UIViewController {
                                    font: .boldSystemFont(ofSize: 20),
                          gradientColors: [UIColor.yellow.cgColor, UIColor.orange.cgColor], startPoint: CGPoint(x: 0.0, y: 0.5), endPoint: CGPoint(x: 1, y: 0.5))
         
-        let gradientLabelSwitch = LabelSwitch(center: CGPoint(x: view.center.x, y: view.center.y + 100), leftConfig: ls2, rightConfig: rs2, defaultState: .L)
+        let gradientLabelSwitch = LabelSwitch(center: CGPoint(x: view.center.x, y: view.center.y + 100), leftConfig: ls2, rightConfig: rs2, defaultState: .L , leftImage:#imageLiteral(resourceName: "qatar"), rightImage:#imageLiteral(resourceName: "northKorea"))
+
         view.addSubview(gradientLabelSwitch)
         
         let ls3 = LabelSwitchConfig(text: "Fire",
@@ -47,7 +48,7 @@ class ViewController: UIViewController {
                                     font: .boldSystemFont(ofSize: 20),
                                     image: UIImage(named: "water.jpg"))
         
-        let imageLabelSwitch = LabelSwitch(center: CGPoint(x: view.center.x, y: view.center.y + 200), leftConfig: ls3, rightConfig: rs3, defaultState: .L)
+        let imageLabelSwitch = LabelSwitch(center: CGPoint(x: view.center.x, y: view.center.y + 200), leftConfig: ls3, rightConfig: rs3, defaultState: .L, leftImage:#imageLiteral(resourceName: "qatar"), rightImage:#imageLiteral(resourceName: "northKorea"))
         view.addSubview(imageLabelSwitch)
     }
 }
