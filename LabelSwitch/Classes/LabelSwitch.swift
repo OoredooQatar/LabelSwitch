@@ -75,6 +75,7 @@ private class LabelSwitchPart {
     }()
     private lazy var thumbImageView: UIImageView = {
         let view = UIImageView()
+        view.contentMode = .scaleAspectFit
         return view
     }()
     
@@ -213,6 +214,7 @@ private class LabelSwitchPart {
         circleView.layer.cornerRadius = diameter / 2
         circleView.layer.shadowRadius = bounds.height * 0.05
         thumbImageView.layer.cornerRadius = tumbImageDiamter / 2
+        
         let circleSize = CGSize(width: diameter, height: diameter)
         let thumbImageSize = CGSize(width: tumbImageDiamter, height: tumbImageDiamter)
         
